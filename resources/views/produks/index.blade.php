@@ -72,7 +72,7 @@
                                                 <button type="button" class="btn btn-info btn-sm text-white"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#modalUpdateStock-{{ $produk->id }}">
-                                                    <i class="ti ti-refresh"></i>
+                                                    <i class="ti ti-trash"></i>
                                                 </button>
                                                    <!-- Update Stok Button with Logo -->
                                     {{-- <a href="{{ route('produks.updateStock', $user->id) }}" class="btn btn-info btn-sm">

@@ -31,6 +31,39 @@ class PenjualanController extends Controller
         return view('penjualan.pembayaran', compact('penjualan'));
     }
 
+    public function bayar(Request $request, $id)
+    {
+    $penjualan = Penjualan::with('member')->findOrFail($id);
+
+    // Misal input dari form
+    $uangDiberi = $request->input('uang_diberi');
+    $pointUsed = $request->input('point_used', 0); // kalau pakai poin
+
+    $totalBayar = $penjualan->total_harga - $pointUsed;
+    $kembalian = $uangDiberi - $totalBayar;
+
+    $penjualan->uang_diberi = $uangDiberi;
+    $penjualan->uang_kembali = $kembalian;
+    $penjualan->point_used = $pointUsed;
+
+    // Hitung poin baru
+    $poinBaru = floor($penjualan->total_harga / 1000);
+    $penjualan->point_earned = $poinBaru;
+
+    // Simpan penjualan dulu
+    $penjualan->save();
+
+    // Tambahkan poin ke member
+    if ($penjualan->member) {
+        $member = $penjualan->member;
+        $member->poin = $member->poin - $pointUsed + $poinBaru;
+        $member->save();
+    }
+
+    return redirect()->route('penjualan.hasil', $penjualan->id);
+    }
+
+
     public function show($id)
     {
         $penjualan = Penjualan::with(['member', 'detailPenjualan.produk'])->findOrFail($id);

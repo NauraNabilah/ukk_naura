@@ -48,7 +48,7 @@
                             <form action="{{ route('produks.index') }}" method="GET" class="app-search position-absolute">
                                 <input type="text" name="search" class="form-control" placeholder="Cari nama produk...">
                                 <button type="submit" class="srh-btn"><i class="mdi mdi-magnify"></i></button>
-                            </form>                            
+                            </form>
                         </li>
                     </ul>
 
@@ -59,13 +59,11 @@
                                 <img src="{{ asset('assets/images/users/pp.jpg') }}" alt="user" class="rounded-circle" width="31">
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end user-dd animated" aria-labelledby="navbarDropdown">
-                                <!-- Profile Info -->
                                 <a class="dropdown-item" href="javascript:void(0)">
                                     <i class="ti-user m-r-5 m-l-5"></i>
                                     {{ session('user.role') }}
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <!-- Logout -->
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
                                     <button type="submit" class="dropdown-item text-danger">
@@ -106,13 +104,13 @@
                             </a>
                         </li>
                         @if (session('user.role') == 'admin')
-                        <<li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" 
-                            href="{{ route('users.index') }}" aria-expanded="false">
-                                <i class="mdi mdi-account"></i>
-                                <span class="hide-menu">User</span>
-                            </a>
-                        </li>                        
+                            <li class="sidebar-item">
+                                <a class="sidebar-link waves-effect waves-dark sidebar-link" 
+                                   href="{{ route('users.index') }}" aria-expanded="false">
+                                    <i class="mdi mdi-account"></i>
+                                    <span class="hide-menu">User</span>
+                                </a>
+                            </li>                        
                         @endif
                     </ul>
                 </nav>
@@ -121,9 +119,15 @@
 
         <!-- Page Content -->
         <div class="page-wrapper">
+            <!-- Breadcrumb -->
             <div class="page-breadcrumb">
                 <div class="row align-items-center">
                     <div class="col-6">
+                        @php
+                            $routeName = Route::currentRouteName(); // e.g., users.index
+                            $pageTitle = ucwords(str_replace('.', ' ', $routeName)); // Users Index
+                        @endphp
+
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb mb-0 d-flex align-items-center">
                                 <li class="breadcrumb-item">
@@ -131,17 +135,16 @@
                                         <i class="mdi mdi-home-outline fs-4"></i>
                                     </a>
                                 </li>
-                                <li class="breadcrumb-item active" aria-current="page">Dashboard</li>
+                                <li class="breadcrumb-item active" aria-current="page">{{ $pageTitle }}</li>
                             </ol>
                         </nav>
-                        @if (request()->routeIs('dashboard.index'))
-                        <h1 class="mb-0 fw-bold">Dashboard</h1>
-                        @endif
-                    
+
+                        <h1 class="mb-0 fw-bold">{{ $pageTitle }}</h1>
                     </div>
                 </div>
             </div>
 
+            <!-- Main Content -->
             <div class="container-fluid">
                 @yield('content')
             </div>
