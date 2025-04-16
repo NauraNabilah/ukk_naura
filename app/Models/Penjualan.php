@@ -20,10 +20,9 @@ class Penjualan extends Model
         'point_earned'
     ];
 
-    // Relasi ke detail penjualan
     public function detailPenjualan()
     {
-        return $this->hasMany(Detail_penjualan::class, 'id_penjualan');
+        return $this->hasMany(detailPenjualan::class, 'id_penjualan');
     }
 
     // Relasi ke member

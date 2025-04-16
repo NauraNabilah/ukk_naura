@@ -4,11 +4,11 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductsTable extends Migration
+class Produk extends Migration 
 {
     public function up()
     {
-         Schema::create('produk', function (Blueprint $table) {
+         Schema::create('produks', function (Blueprint $table) {
              $table->id();
              $table->string('gambar')->nullable(); 
              $table->string('nama_produk');
