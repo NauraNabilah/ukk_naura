@@ -85,7 +85,7 @@
                         y: {
                             beginAtZero: true,
                             ticks: {
-                                precision: 0 // biar nggak ada koma
+                                precision: 0 
                             }
                         }
                     },

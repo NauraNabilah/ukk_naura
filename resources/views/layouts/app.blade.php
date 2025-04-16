@@ -64,23 +64,21 @@
     <!-- Profile -->
     <a class="dropdown-item" href="javascript:void(0)">
         <i class="ti-user m-r-5 m-l-5"></i>
-        {{ session('user.nama') }}
+        {{ session('user.role') }}
     </a>
 
-    <!-- Divider -->
     <div class="dropdown-divider"></div>
 
-    <!-- Logout -->
     <form action="{{ route('logout') }}" method="POST">
         @csrf
         <button type="submit" class="dropdown-item text-danger">
             <i class="ti-power-off m-r-5 m-l-5"></i>
-            Logout
+                Logout
         </button>
     </form>
-</ul>
+    </ul>
 
-                        </li>
+    </li>
                     </ul>
                 </div>
             </nav>

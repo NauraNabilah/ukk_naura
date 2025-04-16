@@ -24,8 +24,6 @@ class Penjualan extends Model
     {
         return $this->hasMany(detailPenjualan::class, 'id_penjualan');
     }
-
-    // Relasi ke member
     public function member()
     {
         return $this->belongsTo(Member::class, 'id_member');

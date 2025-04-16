@@ -39,6 +39,4 @@ class DashboardController extends Controller
         return view('dashboard.index', compact('jmlTrans', 'produkTerjual', 'transaksiHarian'));
     }
 
-    // public function penjualanHari()
-
 }

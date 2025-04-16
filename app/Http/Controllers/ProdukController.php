@@ -72,7 +72,6 @@ class ProdukController extends Controller
         return redirect()->route('produks.index')->with('success', 'Produk berhasil diperbarui.');
     }
 
-    // Hapus produk
     public function destroy(Produk $produk)
     {
         if ($produk->gambar && Storage::disk('public')->exists($produk->gambar)) {
@@ -83,7 +82,6 @@ class ProdukController extends Controller
         return redirect()->route('produks.index')->with('success', 'Produk berhasil dihapus.');
     }
 
-    // Update stok produk
     public function updateStock(Request $request, Produk $produk)
     {
         $request->validate([

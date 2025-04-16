@@ -13,11 +13,11 @@
         @endif
     </div>
 
-    {{-- <div class="mb-4">
+    <div class="mb-4">
         <a class="btn btn-success" href="{{ route('penjualan.exportExcel') }}">
             Export Penjualan (.xls)
         </a>     
-    </div> --}}
+    </div>
 
     @if ($penjualans->isEmpty())
         <div class="alert alert-info text-center">Belum ada transaksi.</div>

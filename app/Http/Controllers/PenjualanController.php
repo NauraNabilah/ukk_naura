@@ -116,7 +116,6 @@ class PenjualanController extends Controller
 
             DB::commit();
 
-            // Logika lanjutan jika member
             if ($request->member === 'Member') {
                 if (empty($request->phone)) {
                     return redirect()->back()->with('error', 'Nomor telepon harus diisi untuk member!');
@@ -325,53 +324,53 @@ class PenjualanController extends Controller
         return $pdf->download('penjualan-pdf' . $penjualan->id . '.pdf');
     }
 
-    // public function exportExcel()
-    // {
-    //     $penjualans = \App\Models\Penjualan::with(['member', 'detailPenjualan.produk'])->get();
+    public function exportExcel()
+    {
+        $penjualans = \App\Models\Penjualan::with(['member', 'detailPenjualan.produk'])->get();
 
-    //     $output = '
-    //     <table border="1">
-    //         <thead>
-    //             <tr>
-    //                 <th>Nama Member</th>
-    //                 <th>No HP</th>
-    //                 <th>Poin</th>
-    //                 <th>Produk</th>
-    //                 <th>Total Harga</th>
-    //                 <th>Total Bayar</th>
-    //                 <th>Total Diskon</th>
-    //                 <th>Total Kembalian</th>
-    //                 <th>Tanggal Pembelian</th>
-    //             </tr>
-    //         </thead>
-    //         <tbody>';
+        $output = '
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Nama Member</th>
+                    <th>No HP</th>
+                    <th>Poin</th>
+                    <th>Produk</th>
+                    <th>Total Harga</th>
+                    <th>Total Bayar</th>
+                    <th>Total Diskon</th>
+                    <th>Total Kembalian</th>
+                    <th>Tanggal Pembelian</th>
+                </tr>
+            </thead>
+            <tbody>';
 
-    //     foreach ($penjualans as $p) {
-    //         $produkList = '';
-    //         foreach ($p->detailPenjualan as $detail) {
-    //             $produkList .= $detail->produk->nama_produk . ' (' . $detail->jumlah . 'x), ';
-    //         }
-    //         $produkList = rtrim($produkList, ', ');
+        foreach ($penjualans as $p) {
+            $produkList = '';
+            foreach ($p->detailPenjualan as $detail) {
+                $produkList .= $detail->produk->nama_produk . ' (' . $detail->jumlah . 'x), ';
+            }
+            $produkList = rtrim($produkList, ', ');
 
-    //         $output .= '
-    //         <tr>
-    //             <td>' . ($p->member->name ?? '-') . '</td>
-    //             <td>' . ($p->member->phone ?? '-') . '</td>
-    //             <td>' . ($p->member->poin ?? '-') . '</td>
-    //             <td>' . $produkList . '</td>
-    //             <td>' . number_format($p->total_harga, 0, ',', '.') . '</td>
-    //             <td>' . number_format($p->uang_diberi, 0, ',', '.') . '</td>
-    //             <td>' . number_format($p->point_earned ?? 0, 0, ',', '.') . '</td>
-    //             <td>' . number_format($p->uang_kembali, 0, ',', '.') . '</td>
-    //             <td>' . \Carbon\Carbon::parse($p->tanggal)->translatedFormat('d F Y') . '</td>
-    //         </tr>';
-    //     }
+            $output .= '
+            <tr>
+                <td>' . ($p->member->name ?? '-') . '</td>
+                <td>' . ($p->member->phone ?? '-') . '</td>
+                <td>' . ($p->member->poin ?? '-') . '</td>
+                <td>' . $produkList . '</td>
+                <td>' . number_format($p->total_harga, 0, ',', '.') . '</td>
+                <td>' . number_format($p->uang_diberi, 0, ',', '.') . '</td>
+                <td>' . number_format($p->point_earned ?? 0, 0, ',', '.') . '</td>
+                <td>' . number_format($p->uang_kembali, 0, ',', '.') . '</td>
+                <td>' . \Carbon\Carbon::parse($p->tanggal)->translatedFormat('d F Y') . '</td>
+            </tr>';
+        }
 
-    //     $output .= '</tbody></table>';
+        $output .= '</tbody></table>';
 
-    //     return Response::make($output, 200, [
-    //         'Content-Type' => 'application/vnd.ms-excel',
-    //         'Content-Disposition' => 'attachment; filename="penjualan.xls"',
-    //     ]);
-    // }
+        return Response::make($output, 200, [
+            'Content-Type' => 'application/vnd.ms-excel',
+            'Content-Disposition' => 'attachment; filename="penjualan.xls"',
+        ]);
+    }
 }
