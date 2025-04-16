@@ -105,7 +105,6 @@ class PenjualanController extends Controller
                 $produk->save();
             }
 
-            // Tambahan update akhir
             $penjualan->update([
                 'total_harga' => $totalHarga,
                 'uang_kembali' => $request->uang_diberi - $totalHarga,

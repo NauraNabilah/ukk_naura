@@ -19,7 +19,7 @@
 </head>
 <body>
 
-    <h3>Nora Juli</h3>
+    <h3>Alat Solat</h3>
 
     <p>
         Member Status : {{ $penjualan->member ? 'Member' : 'Bukan Member' }}<br>
@@ -50,21 +50,22 @@
     </table>
 
     <table class="summary-table mt-4">
+        
+        <tr>
+            <td>Poin Digunakan</td>
+            <td class="text-end">{{ $penjualan->point_earned ?? 0 }}</td>
+        </tr>
         <tr>
             <td><strong>Total Harga</strong></td>
             <td class="text-end">Rp. {{ number_format($penjualan->total_harga, 0, ',', '.') }}</td>
         </tr>
         <tr>
-            <td>Poin Digunakan</td>
-            <td class="text-end">{{ $penjualan->poin_used ?? 0 }}</td>
-        </tr>
-        <tr>
-            <td><strong>Harga Setelah Poin</strong></td>
-            <td class="text-end">Rp. {{ number_format($penjualan->total_harga - ($penjualan->poin_digunakan ?? 0), 0, ',', '.') }}</td>
+            <td><strong>Uang Diberi</strong></td>
+            <td class="text-end">Rp. {{ number_format($penjualan->uang_diberi, 0, ',', '.') }}</td>
         </tr>
         <tr>
             <td><strong>Total Kembalian</strong></td>
-            <td class="text-end">Rp. {{ number_format($penjualan->uang_kembali, 0, ',', '.') }}</td>
+            <td class="text-end">Rp. {{ number_format($penjualan->uang_kembali + $penjualan->point_earned, 0, ',', '.') }}</td>
         </tr>
     </table>
 
