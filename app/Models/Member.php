@@ -20,6 +20,7 @@ class Member extends Model
 
     public function isFirstTransaction()
     {
-        return $this->penjualans()->count() <= 1;
+    return $this->penjualans()->where('member_id', $this->id)->count() == 1;
     }
+
 }
