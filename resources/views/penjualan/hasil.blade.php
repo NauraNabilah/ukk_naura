@@ -51,12 +51,12 @@
                     </div>
                 @endif
             
-                @if ($penjualan->point_earned > 0)
+                {{-- @if ($penjualan->point_earned > 0)
                     <div class="mb-3 me-4">
                         <p class="mb-1">POINT DIGUNAKAN</p>
                         <p class="fw-bold mb-0">{{ $penjualan->point_earned }} poin</p>
                     </div>
-                @endif
+                @endif --}}
             
                 <div class="mb-3 me-4">
                     <p class="mb-1">KASIR</p>
@@ -65,7 +65,7 @@
             
                 <div class="mb-3 me-4">
                     <p class="mb-1">KEMBALIAN</p>
-                    <p class="fw-bold mb-0">Rp. {{ number_format($penjualan->uang_kembali + $penjualan->point_earned, 0, ',', '.') }}</p>
+                    <p class="fw-bold mb-0">Rp. {{ number_format($penjualan->uang_kembali + $penjualan->point_used, 0, ',', '.') }}</p>
                 </div>
             
                 <div class="text-end ms-auto">

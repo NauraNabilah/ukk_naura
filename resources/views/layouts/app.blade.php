@@ -15,6 +15,8 @@
 
     <!-- Main CSS -->
     <link rel="stylesheet" href="{{ asset('dist/css/style.min.css') }}">
+    <link href="https://unpkg.com/@tabler/icons-webfont@latest/tabler-icons.min.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -139,7 +141,7 @@
                             </ol>
                         </nav>
 
-                        <h1 class="mb-0 fw-bold">{{ $pageTitle }}</h1>
+                        {{-- <h1 class="mb-0 fw-bold">{{ $pageTitle }}</h1> --}}
                     </div>
                 </div>
             </div>

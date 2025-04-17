@@ -12,6 +12,7 @@
     <div class="bg-white shadow rounded p-6 mb-4">
         <h1 class="text-3xl font-bold mb-4">Selamat Datang, {{ session('user.name') }}!</h1>
     </div>
+    <h1 class="mb-0 fw-bold">Dashboard</h1>
 @if (session('user.role') == 'petugas')
 <div class="card border-0 rounded-4 overflow-hidden mb-4">
     <div class="bg-light text-center py-2">

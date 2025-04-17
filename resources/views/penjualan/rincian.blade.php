@@ -97,9 +97,9 @@
             const value = parseInt(uangHidden.value) || 0;
             if (value < total) {
                 errorMessage.classList.remove('d-none');
-                return false; 
+                return false; // Gagal kirim
             }
-            return true; 
+            return true; // Lolos validasi, kirim
         }
     </script>
 
@@ -108,6 +108,7 @@
     const memberSelect = document.getElementById('member');
     const phoneInputContainer = document.getElementById('phone-input-container');
 
+    // Event listener untuk perubahan pada select
     memberSelect.addEventListener('change', function () {
         if (this.value === 'Member') {
             phoneInputContainer.classList.remove('d-none'); // Tampilkan input nomor telepon
