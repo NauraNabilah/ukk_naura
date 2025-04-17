@@ -86,8 +86,7 @@ class PenjualanController extends Controller
                     }
                 }
             }
-    
-            // Simpan transaksi utama
+
             $penjualan = Penjualan::create([
                 'tanggal' => $request->tanggal,
                 'id_member' => $idMember,
@@ -99,7 +98,6 @@ class PenjualanController extends Controller
                 'point_earned' => $idMember ? floor($totalHarga * 0.01) : 0,
             ]);
     
-            // Simpan detail & update stok
             foreach ($request->detail as $item) {
                 $product = Produk::lockForUpdate()->find($item['id_produk']);
                 $sub_total = $product->harga * $item['jumlah'];
@@ -112,20 +110,17 @@ class PenjualanController extends Controller
                     'sub_total' => $sub_total,
                 ]);
     
-                // Update stok
                 $product->stok -= $item['jumlah'];
                 $product->save();
             }
     
             DB::commit();
-    
-            // Logika lanjutan jika member atau non-member
+
             if ($request->member === 'Member') {
                 if (empty($request->phone)) {
                     return redirect()->back()->with('error', 'Nomor telepon harus diisi untuk member!');
                 }
-    
-                // Untuk semua jenis member (baru atau lama), tetap arahkan ke halaman add-member
+
                 return redirect()->route('penjualan.add-member', [
                     'id' => $penjualan->id,
                     'phone' => $request->phone,
@@ -133,7 +128,6 @@ class PenjualanController extends Controller
                     'poin_dipakai' => $poinDipakai,
                 ]);
             } else {
-                // Non-member, langsung ke hasil
                 return redirect()->route('penjualan.hasil', $penjualan->id)
                     ->with('success', 'Transaksi berhasil tanpa member!');
             }
@@ -240,10 +234,9 @@ class PenjualanController extends Controller
         $member = null;
     
         if ($existing) {
-            // Load the member WITH their transactions
             $member = Member::where('phone', $phone)
                  ->select('id', 'name', 'phone', 'poin')
-                ->with('penjualans')  // Make sure this relationship exists
+                ->with('penjualans') 
                 ->first();
         }
     
@@ -273,37 +266,31 @@ class PenjualanController extends Controller
         $poinDigunakan = 0;
         
         if ($member) {
-            // Determine if this is first transaction (before counting this one)
             $isFirstTransaction = $member->isFirstTransaction();
             
-            // Calculate points to be earned from this transaction
             $poinBaru = floor($penjualan->total_harga * 0.01);
             
-            // If not first transaction and user wants to use points
             if (!$isFirstTransaction && $gunakanPoin && $member->poin > 0) {
                 $poinDigunakan = min($member->poin, $penjualan->total_harga);
                 $penjualan->total_harga -= $poinDigunakan;
                 $member->poin -= $poinDigunakan;
             }
             
-            // Always add new points from transaction
             $member->poin += $poinBaru;
             $member->save();
         } else {
-            // New member - create with initial points but they can't use them yet
             $member = Member::create([
                 'name' => $request->name,
                 'phone' => $request->phone,
-                'poin' => floor($penjualan->total_harga * 0.01), // Initial points from first transaction
+                'poin' => floor($penjualan->total_harga * 0.01), 
                 'tanggal_gabung' => now(),
             ]);
         }
     
-        // Update the sale record with member info and points data
         $penjualan->update([
             'id_member' => $member->id,
-            'point_used' => $poinDigunakan, // Points that were used as discount
-            'point_earned' => floor($penjualan->total_harga * 0.01), // Points earned from this transaction
+            'point_used' => $poinDigunakan, 
+            'point_earned' => floor($penjualan->total_harga * 0.01), 
         ]);
     
         return redirect()->route('penjualan.hasil', $penjualan->id)

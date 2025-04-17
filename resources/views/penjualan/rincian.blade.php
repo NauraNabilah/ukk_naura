@@ -111,9 +111,9 @@
     // Event listener untuk perubahan pada select
     memberSelect.addEventListener('change', function () {
         if (this.value === 'Member') {
-            phoneInputContainer.classList.remove('d-none'); // Tampilkan input nomor telepon
+            phoneInputContainer.classList.remove('d-none'); 
         } else {
-            phoneInputContainer.classList.add('d-none'); // Sembunyikan input nomor telepon
+            phoneInputContainer.classList.add('d-none'); 
         }
     });
 });
